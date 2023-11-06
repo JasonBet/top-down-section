@@ -11,9 +11,9 @@ int main()
     InitWindow(windowDimensions[0],windowDimensions[1],"TOP-DOWN");
 
     // load map texture
-    Texture2D WorldMap=LoadTexture("nature_tileset/OpenWorldMap24x24.png");
-    Vector2 mapPos{0.0,0.0};
+    Texture2D map=LoadTexture("nature_tileset/OpenWorldMap24x24.png");
 
+    SetTargetFPS(60);
     // game loop
     while(!WindowShouldClose())
     {
@@ -21,14 +21,17 @@ int main()
         BeginDrawing();
         ClearBackground(WHITE);
 
-        DrawTextureEx(WorldMap,mapPos,0.0,4,WHITE);
+        Vector2 mapPos{0.0,0.0};
+        DrawTextureEx(map,mapPos,0.0,4,WHITE);
 
 
 
         EndDrawing();
     }
 
-    UnloadTexture(WorldMap);
+    UnloadTexture(map);
 
     CloseWindow();
+
+    return 0;
 }
