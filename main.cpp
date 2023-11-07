@@ -15,7 +15,13 @@ int main()
     Texture2D map=LoadTexture("nature_tileset/OpenWorldMap24x24.png");
     Vector2 mapPos{0.0,0.0};
 
-    const float speed=4.0;
+    float speed=4.0;
+
+    Texture2D knight=LoadTexture("characters/knight_idle_spritesheet.png");
+    Vector2 knightPos{
+        static_cast<float>(windowDimensions[0])/2.0f-4.0f*(0.5f*static_cast<float>(knight.width)/6.0f),
+        static_cast<float>(windowDimensions[1])/2.0f-4.0f*(0.5f*static_cast<float>(knight.height))
+    };
 
     SetTargetFPS(60);
     // game loop
