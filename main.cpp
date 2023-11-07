@@ -15,6 +15,8 @@ int main()
     Texture2D map=LoadTexture("nature_tileset/OpenWorldMap24x24.png");
     Vector2 mapPos{0.0,0.0};
 
+    const float speed=4.0;
+
     SetTargetFPS(60);
     // game loop
     while(!WindowShouldClose())
@@ -31,7 +33,7 @@ int main()
         
         if(Vector2Length(direction)!=0.0)
         {
-            mapPos=Vector2Subtract(mapPos,Vector2Normalize(direction));
+            mapPos=Vector2Subtract(mapPos,Vector2Scale(Vector2Normalize(direction),speed));
         }
 
         DrawTextureEx(map,mapPos,0.0,4,WHITE);
