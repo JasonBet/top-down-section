@@ -12,6 +12,7 @@ int main()
 
     // load map texture
     Texture2D map=LoadTexture("nature_tileset/OpenWorldMap24x24.png");
+    Vector2 mapPos{0.0,0.0};
 
     SetTargetFPS(60);
     // game loop
@@ -21,7 +22,12 @@ int main()
         BeginDrawing();
         ClearBackground(WHITE);
 
-        Vector2 mapPos{0.0,0.0};
+        Vector2 direction{};
+        if(IsKeyDown(KEY_A)) direction.x-=1.0;
+        if(IsKeyDown(KEY_D)) direction.x+=1.0;
+        if(IsKeyDown(KEY_W)) direction.y-=1.0;
+        if(IsKeyDown(KEY_S)) direction.y+=1.0;
+
         DrawTextureEx(map,mapPos,0.0,4,WHITE);
 
 
