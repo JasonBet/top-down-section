@@ -54,6 +54,7 @@ int main()
     }
 
     UnloadTexture(map);
+    UnloadTexture(knight);
 
     CloseWindow();
 
