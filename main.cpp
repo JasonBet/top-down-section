@@ -42,9 +42,13 @@ int main()
             mapPos=Vector2Subtract(mapPos,Vector2Scale(Vector2Normalize(direction),speed));
         }
 
+        // draw the map
         DrawTextureEx(map,mapPos,0.0,4,WHITE);
 
-
+        // draw the character
+        Rectangle source{0.f,0.f,static_cast<float>(knight.width)/6.f,static_cast<float>(knight.height)};
+        Rectangle dest{knightPos.x,knightPos.y,4.0f*static_cast<float>(knight.width)/6.0f,4.0f*static_cast<float>(knight.height)};
+        DrawTexturePro(knight,source,dest,Vector2{},0.f,WHITE);
 
         EndDrawing();
     }
