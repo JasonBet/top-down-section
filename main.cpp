@@ -23,6 +23,9 @@ int main()
         static_cast<float>(windowDimensions[1])/2.0f-4.0f*(0.5f*static_cast<float>(knight.height))
     };
 
+    // 1 : facing right, -1 : facing left
+    float rightLeft{1.f};
+
     SetTargetFPS(60);
     // game loop
     while(!WindowShouldClose())
@@ -40,13 +43,15 @@ int main()
         if(Vector2Length(direction)!=0.0)
         {
             mapPos=Vector2Subtract(mapPos,Vector2Scale(Vector2Normalize(direction),speed));
+            direction.x<0.f ? rightLeft=-1.f : rightLeft=1.f;
+
         }
 
         // draw the map
         DrawTextureEx(map,mapPos,0.0,4,WHITE);
 
         // draw the character
-        Rectangle source{0.f,0.f,static_cast<float>(knight.width)/6.f,static_cast<float>(knight.height)};
+        Rectangle source{0.f,0.f,rightLeft*static_cast<float>(knight.width)/6.f,static_cast<float>(knight.height)};
         Rectangle dest{knightPos.x,knightPos.y,4.0f*static_cast<float>(knight.width)/6.0f,4.0f*static_cast<float>(knight.height)};
         DrawTexturePro(knight,source,dest,Vector2{},0.f,WHITE);
 
