@@ -25,6 +25,11 @@ int main()
 
     // 1 : facing right, -1 : facing left
     float rightLeft{1.f};
+    // animation variables
+    float runningTime{};
+    int frame{};
+    const int maxFrames{6};
+    const float updateTime{1.f/12.f};
 
     SetTargetFPS(60);
     // game loop
@@ -50,8 +55,17 @@ int main()
         // draw the map
         DrawTextureEx(map,mapPos,0.0,4,WHITE);
 
+        // update animation frame
+        runningTime+=GetFrameTime();
+        if(runningTime>=updateTime)
+        {
+            frame++;
+            runningTime=0.f;
+            if(frame>maxFrames)frame=0;
+        }
+
         // draw the character
-        Rectangle source{0.f,0.f,rightLeft*static_cast<float>(knight.width)/6.f,static_cast<float>(knight.height)};
+        Rectangle source{frame*static_cast<float>(knight.width)/6.f,0.f,rightLeft*static_cast<float>(knight.width)/6.f,static_cast<float>(knight.height)};
         Rectangle dest{knightPos.x,knightPos.y,4.0f*static_cast<float>(knight.width)/6.0f,4.0f*static_cast<float>(knight.height)};
         DrawTexturePro(knight,source,dest,Vector2{},0.f,WHITE);
 
