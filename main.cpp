@@ -4,9 +4,9 @@
 class Character
 {
 private:
-    Texture2D texture;
-    Texture2D idle;
-    Texture2D run;
+    Texture2D texture{LoadTexture("characters/knight_idle_spritesheet.png")};
+    Texture2D idle{LoadTexture("characters/knight_idle_spritesheet.png")};
+    Texture2D run{LoadTexture("characters/knight_run_spritesheet.png")};
     Vector2 screenPos;
     Vector2 worldPos;
     // 1 : facing right, -1 : facing left
@@ -15,37 +15,67 @@ private:
     float runningTime{};
     int frame{};
     const int maxFrames{6};
-    const float updateTime{1.f/12.f};
+    const float updateTime{1.f / 12.f};
+    const float speed{4.f};
 
 public:
-    Vector2 getWorldPos(){return worldPos;}
-
+    Vector2 getWorldPos() { return worldPos; }
+    void setScreenPos(int winWidth, int winHeight);
+    void tick(float deltaTime);
 };
 
+void Character::setScreenPos(int winWidth, int winHeight)
+{
+    screenPos = {static_cast<float>(winWidth) / 2.0f - 4.0f * (0.5f * static_cast<float>(texture.width) / 6.0f),
+                 static_cast<float>(winHeight) / 2.0f - 4.0f * (0.5f * static_cast<float>(texture.height))};
+}
+
+void Character::tick(float deltaTime)
+{
+    Vector2 direction{};
+    if (IsKeyDown(KEY_A))
+        direction.x -= 1.0;
+    if (IsKeyDown(KEY_D))
+        direction.x += 1.0;
+    if (IsKeyDown(KEY_W))
+        direction.y -= 1.0;
+    if (IsKeyDown(KEY_S))
+        direction.y += 1.0;
+
+    if (Vector2Length(direction) != 0.0)
+    {
+        worldPos = Vector2Add(worldPos, Vector2Scale(Vector2Normalize(direction), speed));
+        direction.x < 0.f ? rightLeft = -1.f : rightLeft = 1.f;
+        texture = run;
+    }
+    else
+    {
+        texture = idle;
+    }
+}
 int main()
 {
     // array of window dimensions
     int windowDimensions[2];
-    windowDimensions[0]=384;
-    windowDimensions[1]=384;
+    windowDimensions[0] = 384;
+    windowDimensions[1] = 384;
 
     // initialize window
-    InitWindow(windowDimensions[0],windowDimensions[1],"TOP-DOWN");
+    InitWindow(windowDimensions[0], windowDimensions[1], "TOP-DOWN");
 
     // load map texture
-    Texture2D map=LoadTexture("nature_tileset/OpenWorldMap24x24.png");
-    Vector2 mapPos{0.0,0.0};
+    Texture2D map = LoadTexture("nature_tileset/OpenWorldMap24x24.png");
+    Vector2 mapPos{0.0, 0.0};
 
-    float speed=4.0;
+    float speed = 4.0;
 
-    Texture2D knight=LoadTexture("characters/knight_idle_spritesheet.png");
+    Texture2D knight = LoadTexture("characters/knight_idle_spritesheet.png");
     Vector2 knightPos{
-        static_cast<float>(windowDimensions[0])/2.0f-4.0f*(0.5f*static_cast<float>(knight.width)/6.0f),
-        static_cast<float>(windowDimensions[1])/2.0f-4.0f*(0.5f*static_cast<float>(knight.height))
-    };
-    Texture2D knight_idle=LoadTexture("characters/knight_idle_spritesheet.png");
+        static_cast<float>(windowDimensions[0]) / 2.0f - 4.0f * (0.5f * static_cast<float>(knight.width) / 6.0f),
+        static_cast<float>(windowDimensions[1]) / 2.0f - 4.0f * (0.5f * static_cast<float>(knight.height))};
+    Texture2D knight_idle = LoadTexture("characters/knight_idle_spritesheet.png");
 
-    Texture2D knight_run=LoadTexture("characters/knight_run_spritesheet.png");
+    Texture2D knight_run = LoadTexture("characters/knight_run_spritesheet.png");
 
     // 1 : facing right, -1 : facing left
     float rightLeft{1.f};
@@ -53,49 +83,54 @@ int main()
     float runningTime{};
     int frame{};
     const int maxFrames{6};
-    const float updateTime{1.f/12.f};
+    const float updateTime{1.f / 12.f};
 
     SetTargetFPS(60);
     // game loop
-    while(!WindowShouldClose())
+    while (!WindowShouldClose())
     {
         // start drawing
         BeginDrawing();
         ClearBackground(WHITE);
 
         Vector2 direction{};
-        if(IsKeyDown(KEY_A)) direction.x-=1.0;
-        if(IsKeyDown(KEY_D)) direction.x+=1.0;
-        if(IsKeyDown(KEY_W)) direction.y-=1.0;
-        if(IsKeyDown(KEY_S)) direction.y+=1.0;
-        
-        if(Vector2Length(direction)!=0.0)
+        if (IsKeyDown(KEY_A))
+            direction.x -= 1.0;
+        if (IsKeyDown(KEY_D))
+            direction.x += 1.0;
+        if (IsKeyDown(KEY_W))
+            direction.y -= 1.0;
+        if (IsKeyDown(KEY_S))
+            direction.y += 1.0;
+
+        if (Vector2Length(direction) != 0.0)
         {
-            mapPos=Vector2Subtract(mapPos,Vector2Scale(Vector2Normalize(direction),speed));
-            direction.x<0.f ? rightLeft=-1.f : rightLeft=1.f;
-            knight=knight_run;
+            mapPos = Vector2Subtract(mapPos, Vector2Scale(Vector2Normalize(direction), speed));
+            direction.x < 0.f ? rightLeft = -1.f : rightLeft = 1.f;
+            knight = knight_run;
         }
         else
         {
-            knight=knight_idle;
+            knight = knight_idle;
         }
 
         // draw the map
-        DrawTextureEx(map,mapPos,0.0,4,WHITE);
+        DrawTextureEx(map, mapPos, 0.0, 4, WHITE);
 
         // update animation frame
-        runningTime+=GetFrameTime();
-        if(runningTime>=updateTime)
+        runningTime += GetFrameTime();
+        if (runningTime >= updateTime)
         {
             frame++;
-            runningTime=0.f;
-            if(frame>maxFrames)frame=0;
+            runningTime = 0.f;
+            if (frame > maxFrames)
+                frame = 0;
         }
 
         // draw the character
-        Rectangle source{frame*static_cast<float>(knight.width)/6.f,0.f,rightLeft*static_cast<float>(knight.width)/6.f,static_cast<float>(knight.height)};
-        Rectangle dest{knightPos.x,knightPos.y,4.0f*static_cast<float>(knight.width)/6.0f,4.0f*static_cast<float>(knight.height)};
-        DrawTexturePro(knight,source,dest,Vector2{},0.f,WHITE);
+        Rectangle source{frame * static_cast<float>(knight.width) / 6.f, 0.f, rightLeft * static_cast<float>(knight.width) / 6.f, static_cast<float>(knight.height)};
+        Rectangle dest{knightPos.x, knightPos.y, 4.0f * static_cast<float>(knight.width) / 6.0f, 4.0f * static_cast<float>(knight.height)};
+        DrawTexturePro(knight, source, dest, Vector2{}, 0.f, WHITE);
 
         EndDrawing();
     }
