@@ -52,6 +52,15 @@ void Character::tick(float deltaTime)
     {
         texture = idle;
     }
+    // update animation frame
+    runningTime += deltaTime;
+    if (runningTime >= updateTime)
+    {
+        frame++;
+        runningTime = 0.f;
+        if (frame > maxFrames)
+            frame = 0;
+    }
 }
 int main()
 {
