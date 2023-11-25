@@ -2,41 +2,6 @@
 #include "raymath.h"
 #include "Character.h"
 
-{
-    Vector2 direction{};
-    if (IsKeyDown(KEY_A))
-        direction.x -= 1.0;
-    if (IsKeyDown(KEY_D))
-        direction.x += 1.0;
-    if (IsKeyDown(KEY_W))
-        direction.y -= 1.0;
-    if (IsKeyDown(KEY_S))
-        direction.y += 1.0;
-
-    if (Vector2Length(direction) != 0.0)
-    {
-        worldPos = Vector2Add(worldPos, Vector2Scale(Vector2Normalize(direction), speed));
-        direction.x < 0.f ? rightLeft = -1.f : rightLeft = 1.f;
-        texture = run;
-    }
-    else
-    {
-        texture = idle;
-    }
-    // update animation frame
-    runningTime += deltaTime;
-    if (runningTime >= updateTime)
-    {
-        frame++;
-        runningTime = 0.f;
-        if (frame > maxFrames)
-            frame = 0;
-    }
-    // draw the character
-    Rectangle source{frame * static_cast<float>(texture.width) / 6.f, 0.f, rightLeft * static_cast<float>(texture.width) / 6.f, static_cast<float>(texture.height)};
-    Rectangle dest{screenPos.x, screenPos.y, 4.0f * static_cast<float>(texture.width) / 6.0f, 4.0f * static_cast<float>(texture.height)};
-    DrawTexturePro(texture, source, dest, Vector2{}, 0.f, WHITE);
-}
 int main()
 {
     // array of window dimensions
@@ -50,6 +15,7 @@ int main()
     // load map texture
     Texture2D map = LoadTexture("nature_tileset/OpenWorldMap24x24.png");
     Vector2 mapPos{0.0, 0.0};
+    const float mapScale{4.0f};
 
     Character knight;
     knight.setScreenPos(windowDimensions[0],windowDimensions[1]);
@@ -65,8 +31,16 @@ int main()
 
         mapPos=Vector2Scale(knight.getWorldPos(),-1.f);
         // draw the map
-        DrawTextureEx(map, mapPos, 0.0, 4, WHITE);
+        DrawTextureEx(map, mapPos, 0.0, mapScale, WHITE);
         knight.tick(GetFrameTime());
+        // check map bounds
+        if(knight.getWorldPos().x<0.f ||
+        knight.getWorldPos().y<0.f ||
+        knight.getWorldPos().x+windowDimensions[0]>map.width*mapScale ||
+        knight.getWorldPos().y+windowDimensions[1]>map.height*mapScale)
+        {
+
+        }
 
         EndDrawing();
     }
