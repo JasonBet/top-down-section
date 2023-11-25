@@ -39,7 +39,7 @@ int main()
         knight.getWorldPos().x+windowDimensions[0]>map.width*mapScale ||
         knight.getWorldPos().y+windowDimensions[1]>map.height*mapScale)
         {
-
+            knight.undoMovement();
         }
 
         EndDrawing();
