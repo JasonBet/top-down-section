@@ -1,7 +1,13 @@
-#include "raylib.h"
-#include "raymath.h"
 #include "Character.h"
+#include "raymath.h"
 
+void Character::setScreenPos(int winWidth, int winHeight)
+{
+    screenPos = {static_cast<float>(winWidth) / 2.0f - 4.0f * (0.5f * static_cast<float>(texture.width) / 6.0f),
+                 static_cast<float>(winHeight) / 2.0f - 4.0f * (0.5f * static_cast<float>(texture.height))};
+}
+
+void Character::tick(float deltaTime)
 {
     Vector2 direction{};
     if (IsKeyDown(KEY_A))
@@ -36,43 +42,4 @@
     Rectangle source{frame * static_cast<float>(texture.width) / 6.f, 0.f, rightLeft * static_cast<float>(texture.width) / 6.f, static_cast<float>(texture.height)};
     Rectangle dest{screenPos.x, screenPos.y, 4.0f * static_cast<float>(texture.width) / 6.0f, 4.0f * static_cast<float>(texture.height)};
     DrawTexturePro(texture, source, dest, Vector2{}, 0.f, WHITE);
-}
-int main()
-{
-    // array of window dimensions
-    int windowDimensions[2];
-    windowDimensions[0] = 384;
-    windowDimensions[1] = 384;
-
-    // initialize window
-    InitWindow(windowDimensions[0], windowDimensions[1], "TOP-DOWN");
-
-    // load map texture
-    Texture2D map = LoadTexture("nature_tileset/OpenWorldMap24x24.png");
-    Vector2 mapPos{0.0, 0.0};
-
-    Character knight;
-    knight.setScreenPos(windowDimensions[0],windowDimensions[1]);
-
-
-    SetTargetFPS(60);
-    // game loop
-    while (!WindowShouldClose())
-    {
-        // start drawing
-        BeginDrawing();
-        ClearBackground(WHITE);
-
-        mapPos=Vector2Scale(knight.getWorldPos(),-1.f);
-        // draw the map
-        DrawTextureEx(map, mapPos, 0.0, 4, WHITE);
-        knight.tick(GetFrameTime());
-
-        EndDrawing();
-    }
-
-    UnloadTexture(map);
-    CloseWindow();
-
-    return 0;
 }
