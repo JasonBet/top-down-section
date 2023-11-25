@@ -3,9 +3,9 @@
 class Prop
 {
 public:
-    Prop();
+    Prop(Vector2 pos, Texture2D tex);
 private:
-    Texture2D textre{};
+    Texture2D texture{};
     Vector2 worldPos{};
     float scale{4.f};
 };
