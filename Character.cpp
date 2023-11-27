@@ -12,6 +12,7 @@ Character::Character(int winWidth, int winHeight)
 
 void Character::tick(float deltaTime)
 {
+    // movement
     worldPosLastFrame=worldPos;
     Vector2 direction{};
     if (IsKeyDown(KEY_A))

@@ -7,6 +7,7 @@ Prop::Prop(Vector2 pos, Texture2D tex):
 {
 
 }
+
 void Prop::Render(Vector2 knightPos)
 {
     Vector2 screenPos{Vector2Subtract(worldPos, knightPos)};
