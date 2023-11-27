@@ -20,6 +20,7 @@ int main()
 
     Character knight{windowDimensions[0],windowDimensions[1]};
 
+    // prop objects in array
     Prop props[2]{
         Prop{Vector2{600.f,300.f}, LoadTexture("nature_tileset/Rock.png")},
         Prop{Vector2{400.f,500.f}, LoadTexture("nature_tileset/Log.png")}
@@ -42,6 +43,7 @@ int main()
             prop.Render(knight.getWorldPos());
         }
         knight.tick(GetFrameTime());
+        
         // check map bounds
         if(knight.getWorldPos().x<0.f ||
         knight.getWorldPos().y<0.f ||
