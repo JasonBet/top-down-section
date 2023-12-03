@@ -1,6 +1,7 @@
 #include "raylib.h"
+#include "BaseCharacter.h"
 
-class Character
+class Character : public BaseCharacter
 {
 private:
     Texture2D texture{LoadTexture("characters/knight_idle_spritesheet.png")};
