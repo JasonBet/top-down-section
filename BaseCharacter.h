@@ -9,6 +9,7 @@ public:
     Vector2 getWorldPos() {return worldPos;}
     void undoMovement();
     Rectangle GetCollisionRec();
+    virtual void tick(float deltaTime);
 
 protected:
     Texture2D texture{LoadTexture("characters/knight_idle_spritesheet.png")};
