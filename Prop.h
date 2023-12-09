@@ -7,7 +7,7 @@ public:
     void Render(Vector2 knightPos);
     Rectangle GetCollisionRec(Vector2 knightPos);
 private:
-    Texture2D texture{};
     Vector2 worldPos{};
+    Texture2D texture{};
     float scale{4.f};
 };
