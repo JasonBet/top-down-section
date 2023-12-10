@@ -2,7 +2,7 @@
 #include "raymath.h"
 
 Character::Character(int winWidth, int winHeight) :
-    windowWidth(windowWidth),
+    windowWidth(winWidth),
     windowHeight(winHeight)
 {
     width=texture.width/maxFrames;
@@ -27,4 +27,9 @@ void Character::tick(float deltaTime)
     if (IsKeyDown(KEY_S))
         velocity.y += 1.0;
     BaseCharacter::tick(deltaTime);
+
+    // draw the sword
+    Rectangle source{0.f, 0.f, static_cast<float>(weapon.width)*rightLeft, static_cast<float>(weapon.height)};
+    Rectangle dest{getScreenPos().x, getScreenPos().y, weapon.width * scale, weapon.height * scale};
+    DrawTexturePro(weapon, source, dest, {}, 0.f, WHITE);
 }
