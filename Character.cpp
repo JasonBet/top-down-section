@@ -23,15 +23,4 @@ void Character::tick(float deltaTime)
         direction.y -= 1.0;
     if (IsKeyDown(KEY_S))
         direction.y += 1.0;
-
-    if (Vector2Length(direction) != 0.0)
-    {
-        worldPos = Vector2Add(worldPos, Vector2Scale(Vector2Normalize(direction), speed));
-        direction.x < 0.f ? rightLeft = -1.f : rightLeft = 1.f;
-        texture = run;
-    }
-    else
-    {
-        texture = idle;
-    }
 }

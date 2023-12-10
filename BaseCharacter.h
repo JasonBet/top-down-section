@@ -29,6 +29,7 @@ protected:
     float width{};
     float height{};
     float scale{4.0f};
+    Vector2 velocity{};
 private:
 };
 
