@@ -12,15 +12,14 @@ Character::Character(int winWidth, int winHeight)
 
 void Character::tick(float deltaTime)
 {
-    BaseCharacter::tick(deltaTime);
     // movement
-    Vector2 direction{};
     if (IsKeyDown(KEY_A))
-        direction.x -= 1.0;
+        velocity.x -= 1.0;
     if (IsKeyDown(KEY_D))
-        direction.x += 1.0;
+        velocity.x += 1.0;
     if (IsKeyDown(KEY_W))
-        direction.y -= 1.0;
+        velocity.y -= 1.0;
     if (IsKeyDown(KEY_S))
-        direction.y += 1.0;
+        velocity.y += 1.0;
+    BaseCharacter::tick(deltaTime);
 }
