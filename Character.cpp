@@ -45,4 +45,8 @@ void Character::tick(float deltaTime)
     Rectangle source{0.f, 0.f, static_cast<float>(weapon.width)*rightLeft, static_cast<float>(weapon.height)};
     Rectangle dest{getScreenPos().x+offset.x, getScreenPos().y+offset.y, weapon.width * scale, weapon.height * scale};
     DrawTexturePro(weapon, source, dest, origin, 0.f, WHITE);
+
+    DrawRectangleLines(
+        getScreenPos().x+offset.x, getScreenPos().y+offset.y, weapon.width * scale, weapon.height * scale, RED
+    );
 }
