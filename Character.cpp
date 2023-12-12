@@ -28,8 +28,21 @@ void Character::tick(float deltaTime)
         velocity.y += 1.0;
     BaseCharacter::tick(deltaTime);
 
+    Vector2 origin{};
+    Vector2 offset{};
+    if(rightLeft>0.f)
+    {
+        origin = {0.f, weapon.height*scale};
+        offset = {35.f,55.f};
+    }
+    else
+    {
+        origin = {weapon.width*scale, weapon.height*scale};
+        offset = {25.f,55.f};
+    }
+
     // draw the sword
     Rectangle source{0.f, 0.f, static_cast<float>(weapon.width)*rightLeft, static_cast<float>(weapon.height)};
-    Rectangle dest{getScreenPos().x, getScreenPos().y, weapon.width * scale, weapon.height * scale};
-    DrawTexturePro(weapon, source, dest, {}, 0.f, WHITE);
+    Rectangle dest{getScreenPos().x+offset.x, getScreenPos().y+offset.y, weapon.width * scale, weapon.height * scale};
+    DrawTexturePro(weapon, source, dest, origin, 0.f, WHITE);
 }
