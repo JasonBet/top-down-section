@@ -34,11 +34,23 @@ void Character::tick(float deltaTime)
     {
         origin = {0.f, weapon.height*scale};
         offset = {35.f,55.f};
+        weaponCollisionRec={
+            getScreenPos().x+offset.x,
+            getScreenPos().y+offset.y-weapon.height*scale,
+            weapon.width*scale,
+            weapon.height*scale
+        };
     }
     else
     {
         origin = {weapon.width*scale, weapon.height*scale};
         offset = {25.f,55.f};
+        weaponCollisionRec={
+            getScreenPos().x+offset.x-weapon.width*scale,
+            getScreenPos().y+offset.y-weapon.height*scale,
+            weapon.width*scale,
+            weapon.height*scale
+        };
     }
 
     // draw the sword
@@ -47,6 +59,10 @@ void Character::tick(float deltaTime)
     DrawTexturePro(weapon, source, dest, origin, 0.f, WHITE);
 
     DrawRectangleLines(
-        getScreenPos().x+offset.x, getScreenPos().y+offset.y, weapon.width * scale, weapon.height * scale, RED
+        weaponCollisionRec.x,
+        weaponCollisionRec.y,
+        weaponCollisionRec.width,
+        weaponCollisionRec.height,
+        RED
     );
 }
