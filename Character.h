@@ -16,6 +16,7 @@ public:
     Character(int winWidth, int winHeight);
     virtual void tick(float deltaTime) override;
     virtual Vector2 getScreenPos() override;
+    Rectangle getWeaponCollissionRec(){return weaponCollisionRec;}
 };
 
 #endif
