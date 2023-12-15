@@ -60,7 +60,10 @@ int main()
         }
         else
         {
-            
+            std::string knightsHealth = "Health: ";
+            knightsHealth.append(std::to_string(knight.getHealth()),0,5);
+            // DrawText function needs a c style string, converting std string into c style string with .c_str()
+            DrawText(knightsHealth.c_str(),55.f,45.f,40,RED);
         }
 
         knight.tick(GetFrameTime());
