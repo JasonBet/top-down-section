@@ -19,6 +19,7 @@ public:
     virtual Vector2 getScreenPos() override;
     Rectangle getWeaponCollissionRec() const {return weaponCollisionRec;}
     float getHealth() const {return health;}
+    void takeDamage(float damage);
 };
 
 #endif
