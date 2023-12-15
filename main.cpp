@@ -3,6 +3,7 @@
 #include "Character.h"
 #include "Prop.h"
 #include "Enemy.h"
+#include <string>
 
 int main()
 {
@@ -50,6 +51,18 @@ int main()
         {
             prop.Render(knight.getWorldPos());
         }
+
+        if(!knight.getAlive()) // character is not alive
+        {
+            DrawText("Game Over!", 55.f,45.f,40,RED);
+            EndDrawing();
+            continue;
+        }
+        else
+        {
+            
+        }
+
         knight.tick(GetFrameTime());
         
         // check map bounds
