@@ -39,8 +39,16 @@ int main()
         LoadTexture("characters/slime_idle_spritesheet.png"),
         LoadTexture("characters/slime_run_spritesheet.png")
     };
-    
-    goblin.setTarget(&knight);
+
+    Enemy* enemies[]{
+        &goblin,
+        &slime
+    };
+
+    for(auto enemy:enemies)
+    {
+        enemy->setTarget(&knight);
+    }
 
     SetTargetFPS(60);
     // game loop
