@@ -29,10 +29,17 @@ int main()
     };
 
     Enemy goblin{
-        Vector2{},
+        Vector2{800.f,300.f},
         LoadTexture("characters/goblin_idle_spritesheet.png"),
         LoadTexture("characters/goblin_run_spritesheet.png")
     };
+
+    Enemy slime{
+        Vector2{500.f, 700.f},
+        LoadTexture("characters/slime_idle_spritesheet.png"),
+        LoadTexture("characters/slime_run_spritesheet.png")
+    };
+    
     goblin.setTarget(&knight);
 
     SetTargetFPS(60);
